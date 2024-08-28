@@ -1,12 +1,26 @@
 "sc-halldorophone init...".postln;
 
+// plug in the bela
+// turn on the halldorophone (with "no data" switch in the off position)
+// upload the project files to http://bela.local/
+// click the "Build & run" button
+
+// at this point you can edit thor.scd in the bela IDE,
+// but it rebuilds the project whenever you make a change, which is slow
+
+// instead, you can hot-replace synths on the bela using scide on your laptop:
+// in scide, open local.scd and run the first block to connect to scsynth on Bela
+// edit your local copy of thor.scd
+// run this file (halldorophone.scd) to replace synths on the bela server
+
+// when you are done, remember to upload all files to the bela and test it
+
 (
 // add your presets here
 // there can be up to 3, to be selected by the three buttons
 ~presets = ["victor.scd", "thor.scd", "perform.scd"];
 n = 1; //initial synth 1, 2, or 3 -- change this if you are live-editing one of the presets
-
-s.defaultGroup.freeAll;
+// s.freeAll; // uncomment this for live editing
 
 // hardware config
 // pickups in (numbered for SoundIn)

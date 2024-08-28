@@ -7,10 +7,7 @@ s.options.maxLogins = 4; // should match the settings on the Bela
 s.initTree;
 s.startAliveThread;
 
-s.waitForBoot({
-	s.freeAll;
-	this.executeFile("halldorophone.scd")
-});
+s.boot
 )
 
 //alternatively: local simulation
