@@ -4,8 +4,9 @@
 // add your presets here
 // there can be up to 3, to be selected by the three buttons
 ~presets = ["victor.scd", "thor.scd", "perform.scd"];
+n = 1; //initial synth 1, 2, or 3 -- change this if you are live-editing one of the presets
 
-///Users/victor/Library/CloudStorage/OneDrive-Menntaský/lab-notebook/halldorophone/sc-template/victor.scd
+s.defaultGroup.freeAll;
 
 // hardware config
 // pickups in (numbered for SoundIn)
@@ -20,11 +21,7 @@
 ~output = {arg signal;
 	Out.ar(~output_bus, signal!4)
 };
-);
 
-(
-~synths!?(_.do{ arg y; y.free});
-~button_synths!?(_.do{ arg y; y.free});
 {
 	// haptic feedback synth for button
 	SynthDef(\click, {arg num_clicks;
@@ -46,7 +43,6 @@
 	};
 
 	// handle OSC from button
-	n = 0;
 	OSCdef(\button_def, { |msg|
 		msg.postln;
 		n = ~button_pins.indexOfEqual(msg[3]) + 1;
@@ -61,7 +57,8 @@
 
 	// define synths from preset files
 	~synthdefs = List[];
-	~presets.do{ |p| this.executeFile(p)};
+	// ~presets.do{ |p| this.executeFile(p)};
+	~presets.do{ |p| p.loadRelative};
 
 	s.sync;
 
@@ -71,6 +68,6 @@
 	s.sync;
 
 	// run the first synth
-	~synths[0].run(true);
+	~synths[n-1].run(true);
 
 }.forkIfNeeded;)

@@ -10,9 +10,9 @@
 	//
 	// // adaptive gain
 	// in = in*0.1 + HPZ1.ar(in);
-	in = HPF.ar(in, 200);
+	// in = HPF.ar(in, 200);
 	// in = BHiPass4.ar(in, 100);
-	// in = BLowShelf.ar(in, 600, db:-6);
+	in = BLowShelf.ar(in, 600, db:-6);
 	amp = Amplitude.ar(in, 0.03, 0.03);
 	detect = Integrator.kr(
 		(A2K.kr(amp) - 0.05).min(3e-4).max(-1e-5),
