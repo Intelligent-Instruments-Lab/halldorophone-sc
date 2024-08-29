@@ -22,6 +22,8 @@
 n = 1; //initial synth 1, 2, or 3 -- change this if you are live-editing one of the presets
 // s.freeAll; // uncomment this for live editing
 
+// s.queryAllNodes;
+
 // hardware config
 // pickups in (numbered for SoundIn)
 ~pickup_buses = [2,3,4,5,6,7,0,1];
@@ -83,5 +85,9 @@ n = 1; //initial synth 1, 2, or 3 -- change this if you are live-editing one of 
 
 	// run the first synth
 	~synths[n-1].run(true);
+	// {~output.(SinOsc.ar(112*10)*0.1)}.play;
+	// {~output.(WhiteNoise.ar*0.1)}.play;
+	//rattle: 85, 95, 139, 198-202
+	// reson: 165, 206, 320, 410, 520, 730, 910, 1050
 
 }.forkIfNeeded;)
