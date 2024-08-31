@@ -31,10 +31,11 @@
 			[-5,-7,-9,-11,5,7,9,11]*Lag.ar(amp, 3)/36
 		),
 	);
-	signal = LPZ1.ar(signal)/8 + HPZ1.ar(signal);
+	signal = LPZ1.ar(signal)/6 + HPZ1.ar(signal);
 	signal = Notch.ar(signal, 160);
-	signal = Notch.ar(signal, 890);
-	signal = MoogFF.ar(signal, 5300);
+	// signal = Notch.ar(signal, 890);
+	signal = MoogFF.ar(signal, 5000, 1.5);
+	// signal = LPF.ar(signal, 10000);
 
 	signal = signal.softclip;
 
