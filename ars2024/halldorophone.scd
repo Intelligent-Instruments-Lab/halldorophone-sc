@@ -18,7 +18,7 @@
 (
 // add your presets here
 // there can be up to 3, to be selected by the three buttons
-~presets = ["victor.scd", "thor.scd", "perform.scd"];
+~presets = ["victor.scd", "david.scd", "perform.scd"];
 n = 1; //initial synth 1, 2, or 3 -- change this if you are live-editing one of the presets
 // s.freeAll; // uncomment this for live editing
 
@@ -66,25 +66,30 @@ n = 1; //initial synth 1, 2, or 3 -- change this if you are live-editing one of 
 		// n = n%~synths.size + 1;
 		"running synth %".format(n).postln;
 		Synth(\click, [\num_clicks, n]);
-		~synths.do{arg s; s!?(_.run(false))};
-		~synths[n-1]!?(_.run);
+		~processes.do{arg p; p[\pause].value};
+		~processes[n-1][\run].value;
+		// ~synths.do{arg s; s!?(_.run(false))};
+		// ~synths[n-1]!?(_.run);
 	// }
 	}, "/button");
 
 	// define synths from preset files
-	~synthdefs = List[];
 	// ~presets.do{ |p| this.executeFile(p)};
-	~presets.do{ |p| p.loadRelative};
+	~processes = ~presets.collect{ |p| p.loadRelative[0].postln};
+	~processes = ~processes.collect{ |p| p.next; p.next.postln;};
+	// ~processes = ~presets.collect{ |p| p.loadRelative.next.postln};
+	~processes.postln;
 
 	s.sync;
 
 	// make one of each synth
-	~synths = ~synthdefs.collect{ |name| Synth.newPaused(name.postln) };
+	// ~synths = ~synthdefs.collect{ |name| Synth.newPaused(name.postln) };
 
-	s.sync;
+	// s.sync;
 
 	// run the first synth
-	~synths[n-1].run(true);
+	// ~synths[n-1].run(true);
+	~processes[n-1][\run].value;
 	// {~output.(SinOsc.ar(112*10)*0.1)}.play;
 	// {~output.(WhiteNoise.ar*0.1)}.play;
 	//rattle: 85, 95, 139, 198-202
