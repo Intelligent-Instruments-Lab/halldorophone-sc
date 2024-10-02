@@ -1,15 +1,20 @@
 "defining synth...".postln;
 
 (
-~synthdefs.add(SynthDef(\thor, //name your patch here
-	{
-	var in = SoundIn.ar(~pickup_buses);
-	var ctrl = AnalogIn.ar(~analog_buses);
+Routine {
+	var synth;
+	var name = SynthDef(\thor, {
+		var in = SoundIn.ar(~pickup_buses);
+		var ctrl = AnalogIn.kr(~analog_buses);
 
-	// implement your synth logic here
-	var signal = 0;
-	//
+		var signal = DC.ar(0);
 
-	~output.(signal);
-}).add.name);
+		~output.(signal);
+
+	}).add.name;
+	// s.sync;
+	1.wait;
+	synth = Synth.newPaused(name.postln);
+	(\run:{synth.run}, \pause:{synth.run(false)}).yield;
+}//.forkIfNeeded;
 )
